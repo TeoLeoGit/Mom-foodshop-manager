@@ -138,7 +138,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5993892535510446378}
+        m_TargetAssemblyTypeName: ReportRow, Assembly-CSharp
+        m_MethodName: OnExpenseChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1002,6 +1014,7 @@ GameObject:
   - component: {fileID: 2921470756592724915}
   - component: {fileID: 5475613975249532212}
   - component: {fileID: 3468406559330029543}
+  - component: {fileID: 5993892535510446378}
   m_Layer: 5
   m_Name: row
   m_TagString: Untagged
@@ -1070,6 +1083,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5993892535510446378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315765567186066246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f7c912c9c5c9b46b5d4304fecf9e51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fieldDay: {fileID: 6910471505836287812}
+  _fieldIncome: {fileID: 3934815096405333471}
+  _fieldExpense: {fileID: 5735812310101274277}
+  _txtAverage: {fileID: 5004656705024698350}
 --- !u!1 &7774958146167812587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1237,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5993892535510446378}
+        m_TargetAssemblyTypeName: ReportRow, Assembly-CSharp
+        m_MethodName: OnDayChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1435,7 +1476,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5993892535510446378}
+        m_TargetAssemblyTypeName: ReportRow, Assembly-CSharp
+        m_MethodName: OnIncomeChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
