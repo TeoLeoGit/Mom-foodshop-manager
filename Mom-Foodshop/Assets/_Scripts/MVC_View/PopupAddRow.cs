@@ -16,31 +16,31 @@ public class PopupAddRow : MonoBehaviour, IPopup
     private void Awake()
     {
         _btnAdd.onClick.AddListener(AddRow);
+        _btnClose.onClick.AddListener(MainController.HideAllPopup);
     }
 
     public void AddRow()
     {
         if (float.TryParse(_fieldIncome.text, out float income))
         {
-            Debug.Log(income);
-            if (float.TryParse(_fieldIncome.text, out float expense))
+            if (float.TryParse(_fieldExpense.text, out float expense))
             {
-                Debug.Log(expense);
                 if (DateTime.TryParseExact(_fieldDay.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime day))
                 {
-                    Debug.Log(day);
                     var rowData = new DataRow(day, income, expense);
                     MainController.AddNewRow(rowData);
                 }
             }
-        } 
+        }
     }
 
     public void Show()
     {
+        gameObject.SetActive(true);
     }
 
     public void Hide()
     {
+        gameObject.SetActive(false);
     }
 }

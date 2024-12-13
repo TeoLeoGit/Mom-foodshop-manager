@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -10,38 +11,75 @@ public class ReportRow : MonoBehaviour
     [SerializeField] private TMP_InputField _fieldDay;
     [SerializeField] private TMP_InputField _fieldIncome;
     [SerializeField] private TMP_InputField _fieldExpense;
+    [SerializeField] private TextMeshProUGUI _txtTotal;
     [SerializeField] private TextMeshProUGUI _txtAverage;
-    private int _id;
+    [SerializeField] private Button _btnRemove;
+
+    private DataRow _data;
+
+    public float Income { get { return _data.income; } }
+    public float Expense { get { return _data.expense; } }
+
+    private void Awake()
+    {
+        MainController.OnUpdateAverage += UpdateAverage;
+
+        _btnRemove.onClick.AddListener(RemoveRow);
+    }
+
+    private void OnDestroy()
+    {
+        MainController.OnUpdateAverage -= UpdateAverage;
+    }
 
     public void SetRow(DataRow data)
     {
-        _id = data.id;
-        _fieldDay.text = data.date.ToString();
+        _data = data;
+        _fieldDay.text = data.date.ToString("d MMM yyyy");
         _fieldIncome.text = data.income.ToString();
         _fieldExpense.text = data.expense.ToString();
-        _txtAverage.text = data.average.ToString();
+        _txtTotal.text = (_data.income - _data.expense).ToString();
+
+        MainController.CallUpdateAverage();
     }
 
     public void OnDayChange()
     {
-        //call event.
-        Debug.Log("osd1");
-        Debug.Log(_fieldDay.text);
-
+        if (DateTime.TryParseExact(_fieldDay.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime day))
+        {
+            _data.date = day;
+        }
     }
 
     public void OnIncomeChange()
     {
-        //call event.
-        Debug.Log("osd2");
-        Debug.Log(_fieldIncome.text);
+        if (float.TryParse(_fieldIncome.text, out float result))
+        {
+            _data.income = result;
+            _txtTotal.text = (_data.income - _data.expense).ToString();
+            MainController.CallUpdateAverage();
+        }
     }
 
     public void OnExpenseChange()
     {
-        //call event.
-        Debug.Log("osd3");
-        Debug.Log(_fieldExpense.text);
-
+        if (float.TryParse(_fieldExpense.text, out float result))
+        {
+            _data.expense = result;
+            _txtTotal.text = (_data.income - _data.expense).ToString();
+            MainController.CallUpdateAverage();
+        }
     }
+
+    public void UpdateAverage(float average)
+    {
+        _txtAverage.text = average.ToString();
+    }
+
+    private void RemoveRow()
+    {
+        MainController.RemoveRow(this);
+        Destroy(this.gameObject);
+    }
+
 }

@@ -12,6 +12,8 @@ public class PopupController : MonoBehaviour
     private void Awake()
     {
         MainController.OnOpenPopup += OpenPopup;
+        MainController.OnHideAllPopup += CloseAllPopup;
+
 
         _blurPanel.SetActive(false);
     }
@@ -19,10 +21,12 @@ public class PopupController : MonoBehaviour
     private void OnDestroy()
     {
         MainController.OnOpenPopup -= OpenPopup;
+        MainController.OnHideAllPopup -= CloseAllPopup;
     }
 
     private void OpenPopup(EPopup type)
     {
+        _blurPanel.SetActive(true);
         if (_popupInstants.ContainsKey(type)) _popupInstants[type].Show();
         else
         {
@@ -31,5 +35,12 @@ public class PopupController : MonoBehaviour
                 _popupInstants.Add(type, iPopup);
             _popupInstants[type].Show();
         }
+    }
+
+    private void CloseAllPopup()
+    {
+        _blurPanel.SetActive(false);
+        foreach(var popup in _popupInstants)
+            popup.Value.Hide();
     }
 }
