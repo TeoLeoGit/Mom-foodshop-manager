@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class MainController
 {
@@ -40,5 +38,10 @@ public class MainController
     public static void RemoveRow(ReportRow row)
     {
         OnRemoveRow?.Invoke(row);
+    }
+
+    public static void SaveData(List<DataRow> data)
+    {
+        MainModel.WriteReportToFile(data);
     }
 }

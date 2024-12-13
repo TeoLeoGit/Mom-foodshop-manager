@@ -8,6 +8,7 @@ public enum EPopup
     PopupAddRow = 1,
 }
 
+[Serializable]
 public class DataRow
 {
     public int id;

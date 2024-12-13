@@ -19,6 +19,7 @@ public class ReportRow : MonoBehaviour
 
     public float Income { get { return _data.income; } }
     public float Expense { get { return _data.expense; } }
+    public DataRow RowValue { get { return _data; } }
 
     private void Awake()
     {
@@ -40,6 +41,9 @@ public class ReportRow : MonoBehaviour
         _fieldExpense.text = data.expense.ToString();
         _txtTotal.text = (_data.income - _data.expense).ToString();
 
+        if (_data.income - _data.expense < 0) _txtTotal.color = new Color32(255, 0, 52, 255);
+        else _txtTotal.color = new Color32(0, 142, 66, 255);
+
         MainController.CallUpdateAverage();
     }
 
@@ -57,6 +61,8 @@ public class ReportRow : MonoBehaviour
         {
             _data.income = result;
             _txtTotal.text = (_data.income - _data.expense).ToString();
+            if (_data.income - _data.expense < 0) _txtTotal.color = new Color32(255, 0, 52, 255);
+            else _txtTotal.color = new Color32(0, 142, 66, 255);
             MainController.CallUpdateAverage();
         }
     }
@@ -67,6 +73,8 @@ public class ReportRow : MonoBehaviour
         {
             _data.expense = result;
             _txtTotal.text = (_data.income - _data.expense).ToString();
+            if (_data.income - _data.expense < 0) _txtTotal.color = new Color32(255, 0, 52, 255);
+            else _txtTotal.color = new Color32(0, 142, 66, 255);
             MainController.CallUpdateAverage();
         }
     }

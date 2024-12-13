@@ -30,6 +30,13 @@ public class Table : MonoBehaviour
         MainController.OnRemoveRow -= OnRemoveRow;
     }
 
+    private void Start()
+    {
+        var data = MainModel.ReadFromeFile();
+        foreach(var row in data)
+            AddNewRow(row);
+    }
+
     public void OnCallAddNewRow()
     {
         MainController.OpenPopup(EPopup.PopupAddRow);
@@ -42,7 +49,7 @@ public class Table : MonoBehaviour
         row.SetRow(dataRow);
     }
 
-    public void UpdateAverage()
+    private void UpdateAverage()
     {
         List<float> totals = new();
         float sum = 0;
@@ -53,12 +60,26 @@ public class Table : MonoBehaviour
         }
         MainController.UpdateAverage(Utils.CalculateAverage(totals));
         _txtSum.text = sum.ToString();
+        Save();
     }
 
     private void OnRemoveRow(ReportRow row)
     {
         var removeIndex = _rowList.FindIndex(item => item == row);
-        if (removeIndex > -1) _rowList.RemoveAt(removeIndex);
+        if (removeIndex > -1)
+        {
+            _rowList.RemoveAt(removeIndex);
+        }
         UpdateAverage();
+    }
+
+    private void Save()
+    {
+        List<DataRow> data = new List<DataRow>();
+        foreach(var row in _rowList)
+        {
+            data.Add(row.RowValue);
+        }
+        MainController.SaveData(data);
     }
 }
