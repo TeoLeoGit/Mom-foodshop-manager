@@ -10,7 +10,10 @@ public class Table : MonoBehaviour
     [SerializeField] private ReportRow _rowPrefab;
     [SerializeField] private Transform _container;
     [SerializeField] private Button _btnAddNewRow;
-    [SerializeField] private TextMeshProUGUI _txtSum;
+    [SerializeField] private TextMeshProUGUI _txtSumTotal;
+    [SerializeField] private TextMeshProUGUI _txtSumIncome;
+    [SerializeField] private TextMeshProUGUI _txtSumExpense;
+
 
     private List<ReportRow> _rowList = new();
 
@@ -33,6 +36,7 @@ public class Table : MonoBehaviour
     private void Start()
     {
         var data = MainModel.ReadFromeFile();
+        if (data == null) return;
         foreach(var row in data)
             AddNewRow(row);
     }
@@ -52,14 +56,22 @@ public class Table : MonoBehaviour
     private void UpdateAverage()
     {
         List<float> totals = new();
-        float sum = 0;
-        foreach(var row in _rowList)
+        float sumTotal = 0;
+        float sumIncome = 0;
+        float sumExpense = 0;
+
+        foreach (var row in _rowList)
         {
             totals.Add(row.Income - row.Expense);
-            sum += totals.Last();
+            sumIncome += row.Income;
+            sumExpense += row.Expense;
+            sumTotal += totals.Last();
         }
         MainController.UpdateAverage(Utils.CalculateAverage(totals));
-        _txtSum.text = sum.ToString();
+        _txtSumTotal.text = sumTotal.ToString();
+        _txtSumIncome.text = sumIncome.ToString();
+        _txtSumExpense.text = sumExpense.ToString();
+
         Save();
     }
 

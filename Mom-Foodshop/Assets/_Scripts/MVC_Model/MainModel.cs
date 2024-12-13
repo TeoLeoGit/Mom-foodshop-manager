@@ -9,17 +9,22 @@ public class MainModel
 {
     public static void WriteReportToFile(List<DataRow> data)
     {
-        // Convert data to JSON string
         string jsonData = JsonHelper.ToJson(data.ToArray());
-        Debug.Log(jsonData);
-
-        // Write JSON data to a file
         File.WriteAllText(Application.dataPath + "/data.json", jsonData);
     }
 
     public static List<DataRow> ReadFromeFile()
     {
-        string jsonData = File.ReadAllText(Application.dataPath + "/data.json");
-        return JsonHelper.FromJson<DataRow>(jsonData).ToList();
+        if (File.Exists(Application.dataPath + "/data.json"))
+        {
+            string jsonData = File.ReadAllText(Application.dataPath + "/data.json");
+            var data = JsonHelper.FromJson<DataRow>(jsonData).ToList();
+            foreach(var row in data)
+            {
+                row.date = DateTime.Parse(row.dateInString);
+            }
+            return data;
+        }
+        return null;
     }
 }
