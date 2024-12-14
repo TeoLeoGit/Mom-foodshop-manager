@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
-    void Start()
+    [SerializeField] private Button _btnQuit;
+
+    private void Awake()
     {
-        
+        _btnQuit.onClick.AddListener(QuitGame);    
     }
 
-    void Update()
+    private void QuitGame()
     {
-        
+        Application.Quit();
     }
+
 }
