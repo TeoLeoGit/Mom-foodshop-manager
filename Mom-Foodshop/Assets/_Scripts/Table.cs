@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ public class Table : MonoBehaviour
         if (data == null) return;
         foreach(var row in data)
             AddNewRow(row);
+        SortByDate();
+        Save();
     }
 
     public void OnCallAddNewRow()
@@ -51,6 +54,7 @@ public class Table : MonoBehaviour
         var row = Instantiate(_rowPrefab, _container);
         _rowList.Add(row);
         row.SetRow(dataRow);
+        SortByDate();
     }
 
     private void UpdateAverage()
@@ -93,5 +97,16 @@ public class Table : MonoBehaviour
             data.Add(row.RowValue);
         }
         MainController.SaveData(data);
+    }
+
+    private void SortByDate()
+    {
+        _rowList.Sort((x, y) => x.RowValue.date.CompareTo(y.RowValue.date));
+        var index = 0;
+        foreach (var row in _rowList)
+        {
+            row.transform.SetSiblingIndex(index);
+            index++;
+        }
     }
 }
