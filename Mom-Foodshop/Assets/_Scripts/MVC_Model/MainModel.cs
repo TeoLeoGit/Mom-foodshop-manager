@@ -7,6 +7,21 @@ using UnityEngine;
 
 public class MainModel
 {
+    private static int _month;
+    private static int _year;
+    public static int Month { get { return _month; } }
+    public static int Year { get { return _year; } }
+
+    public static void SetMonth(int month)
+    {
+        _month = month;
+    }
+
+    public static void SetYear(int year)
+    {
+        _year = year;
+    }
+
     public static void WriteReportToFile(List<DataRow> data)
     {
         string jsonData = JsonHelper.ToJson(data.ToArray());

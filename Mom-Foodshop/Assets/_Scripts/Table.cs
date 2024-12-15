@@ -14,6 +14,8 @@ public class Table : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _txtSumTotal;
     [SerializeField] private TextMeshProUGUI _txtSumIncome;
     [SerializeField] private TextMeshProUGUI _txtSumExpense;
+    [SerializeField] private TMP_InputField _inputMonth;
+    [SerializeField] private TMP_InputField _inputYear;
 
 
     private List<ReportRow> _rowList = new();
@@ -23,6 +25,7 @@ public class Table : MonoBehaviour
         MainController.OnAddRow += AddNewRow;
         MainController.OnCallUpdateAverage += UpdateAverage;
         MainController.OnRemoveRow += OnRemoveRow;
+        MainController.OnCallSortTable += SortByDate;
 
         _btnAddNewRow.onClick.AddListener(OnCallAddNewRow);
     }
@@ -32,6 +35,8 @@ public class Table : MonoBehaviour
         MainController.OnAddRow -= AddNewRow;
         MainController.OnCallUpdateAverage -= UpdateAverage;
         MainController.OnRemoveRow -= OnRemoveRow;
+        MainController.OnCallSortTable -= SortByDate;
+
     }
 
     private void Start()
@@ -55,6 +60,22 @@ public class Table : MonoBehaviour
         _rowList.Add(row);
         row.SetRow(dataRow);
         SortByDate();
+    }
+
+    public void SetMonth()
+    {
+        if (int.TryParse(_inputMonth.text, out int result))
+        {
+            MainController.SetMonth(result);
+        }
+    }
+
+    public void SetYear()
+    {
+        if (int.TryParse(_inputYear.text, out int result))
+        {
+            MainController.SetYear(result);
+        }
     }
 
     private void UpdateAverage()

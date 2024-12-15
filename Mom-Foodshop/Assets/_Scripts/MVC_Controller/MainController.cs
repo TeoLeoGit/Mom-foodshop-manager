@@ -9,6 +9,7 @@ public class MainController
     public static event Action OnCallUpdateAverage;
     public static event Action<float> OnUpdateAverage;
     public static event Action<ReportRow> OnRemoveRow;
+    public static event Action OnCallSortTable;
 
     public static void AddNewRow(DataRow row)
     {
@@ -43,5 +44,20 @@ public class MainController
     public static void SaveData(List<DataRow> data)
     {
         MainModel.WriteReportToFile(data);
+    }
+
+    public static void SetMonth(int month)
+    {
+        MainModel.SetMonth(month);
+    }
+
+    public static void SetYear(int year)
+    {
+        MainModel.SetYear(year);
+    }
+
+    public static void CallSortTable()
+    {
+        OnCallSortTable?.Invoke();
     }
 }

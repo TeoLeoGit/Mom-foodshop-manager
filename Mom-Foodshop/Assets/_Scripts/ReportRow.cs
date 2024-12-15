@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,9 +48,13 @@ public class ReportRow : MonoBehaviour
 
     public void OnDayChange()
     {
-        if (DateTime.TryParseExact(_fieldDay.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime day))
+        var month = MainModel.Month < 10 ? $"0{MainModel.Month}" : $"{MainModel.Month}";
+        var day = _fieldDay.text.Length > 1 ? _fieldDay.text : $"0{_fieldDay.text}";
+        if (DateTime.TryParseExact($"{day}/{month}/{MainModel.Year}", "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime date))
         {
-            _data.date = day;
+            _data.date = date;
+            _fieldDay.text = date.ToString("d MMM yyyy");
+            MainController.CallSortTable();
         }
     }
 

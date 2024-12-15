@@ -21,13 +21,15 @@ public class PopupAddRow : MonoBehaviour, IPopup
 
     public void AddRow()
     {
+        var month = MainModel.Month < 10 ? $"0{MainModel.Month}" : $"{MainModel.Month}";
+        var day = _fieldDay.text.Length > 1 ? _fieldDay.text : $"0{_fieldDay.text}";
         if (float.TryParse(_fieldIncome.text, out float income))
         {
             if (float.TryParse(_fieldExpense.text, out float expense))
             {
-                if (DateTime.TryParseExact(_fieldDay.text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime day))
+                if (DateTime.TryParseExact($"{day}/{month}/{MainModel.Year}", "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime date))
                 {
-                    var rowData = new DataRow(day, income, expense);
+                    var rowData = new DataRow(date, income, expense);
                     MainController.AddNewRow(rowData);
                 }
             }
