@@ -26,6 +26,7 @@ public class Table : MonoBehaviour
         MainController.OnCallUpdateAverage += UpdateAverage;
         MainController.OnRemoveRow += OnRemoveRow;
         MainController.OnCallSortTable += SortByDate;
+        MainController.OnChangeFile += OnChangeFile;
 
         _btnAddNewRow.onClick.AddListener(OnCallAddNewRow);
     }
@@ -36,7 +37,7 @@ public class Table : MonoBehaviour
         MainController.OnCallUpdateAverage -= UpdateAverage;
         MainController.OnRemoveRow -= OnRemoveRow;
         MainController.OnCallSortTable -= SortByDate;
-
+        MainController.OnChangeFile -= OnChangeFile;
     }
 
     private void Start()
@@ -129,5 +130,18 @@ public class Table : MonoBehaviour
             row.transform.SetSiblingIndex(index);
             index++;
         }
+    }
+
+    private void OnChangeFile()
+    {
+        foreach (Transform child in _container.transform)
+            Destroy(child.gameObject);
+        _rowList = new();
+        var data = MainModel.ReadFromeFile();
+        if (data == null) return;
+        foreach (var row in data)
+            AddNewRow(row);
+        SortByDate();
+        Save();
     }
 }

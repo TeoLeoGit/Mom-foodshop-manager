@@ -10,6 +10,8 @@ public class MainController
     public static event Action<float> OnUpdateAverage;
     public static event Action<ReportRow> OnRemoveRow;
     public static event Action OnCallSortTable;
+    public static event Action OnChangeFile;
+
 
     public static void AddNewRow(DataRow row)
     {
@@ -59,5 +61,11 @@ public class MainController
     public static void CallSortTable()
     {
         OnCallSortTable?.Invoke();
+    }
+
+    public static void ChangeSourceFile(string fileName)
+    {
+        MainModel.SetFileName(fileName);
+        OnChangeFile?.Invoke();
     }
 }
